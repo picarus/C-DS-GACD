@@ -9,3 +9,8 @@
 
 # RStudio files
 .Rproj.user/
+
+# UCI HAR
+UCI HAR Dataset/*.txt
+UCI HAR Dataset/*/*.txt
+UCI HAR Dataset/*/*/*.txt
