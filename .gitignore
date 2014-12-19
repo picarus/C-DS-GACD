@@ -10,7 +10,7 @@
 # RStudio files
 .Rproj.user/
 
-# UCI HAR
+# UCI HAR files are not upload to Github
 UCI HAR Dataset/*.txt
 UCI HAR Dataset/*/*.txt
 UCI HAR Dataset/*/*/*.txt

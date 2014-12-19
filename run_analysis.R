@@ -2,60 +2,65 @@ library(data.table)
 library(dplyr)
 
 getFiles <- function(folder) {
-  df<-data.frame()
-  fullfolder<-paste0(datafolder,folder,'/') 
+  # create the data_frame that will contain all the data in the folder
+
+  fullfolder<-paste0(datafolder,folder,'/') # generate folder name
   message(fullfolder)
-  filename<-paste0(fullfolder,'subject_',folder,'.txt')
+  filename<-paste0(fullfolder,'subject_',folder,'.txt') # load subject identifiers
   message(filename)
   subject<-read.table(filename,header=F)
   colnames(subject)<-c("subject")
 
-  filename<-paste0(fullfolder,'y_',folder,'.txt')
+  filename<-paste0(fullfolder,'y_',folder,'.txt') # load activities
   message(filename)
   y<-read.table( filename, header=F)
   colnames(y)<-c("activity")
   
-  filename<-paste0(fullfolder,'X_',folder,'.txt')
+  filename<-paste0(fullfolder,'X_',folder,'.txt') # load measurements
   message(filename)
   x<-read.table(filename,header=F )
   
-  subjectyx<-data.frame(subject,y,x)
+  subjectyx<-data.frame(subject,y,x) # concat the three files
   
-  subjectyx
+  subjectyx # return the 
 }
 
+# read labels for activities
 getLabelsActivities <- function(){
   filename<-paste0(datafolder,'activity_labels.txt')
   activities<-read.table(filename, header=F, stringsAsFactors=F )
-  activities<-select(activities,-1)
-  colnames(activities)<-c("activity")
+  activities<-select(activities,-1) # remove the first column
+  colnames(activities)<-c("activity") # name the column properly
   activities
 }
 
+# read features file
 getLabelsFeatures <- function(){
   filename<-paste0(datafolder,'features.txt')
   features<-read.table(filename, header=F )
-  features<-select(features,-1)
-  colnames(features)<-c("feature")
+  features<-select(features,-1)    # remove the first column
+  colnames(features)<-c("feature") # name the column properly
   features
 }
 
-datafolder<-"./UCI HAR Dataset/"
+#set the data folder
+datafolder<-"./UCI HAR Dataset/"   # root folder that contains the data in the working directory
 
 
 # load files with activities and features
 
 # PART 1: MERGE TRAIN and TEST
 #load data
-trte<-c("test","train")
+trte<-c("test","train")  # the two folders to read
 
 data<-data.frame()
 for (folder in trte){
   p<-getFiles(folder)
-  data<-rbind(data,p)
+  data<-rbind(data,p)   # rows are put together
 }
 
 # PART 2: EXTRACT COLUMNS WITH MEAN OR STD
+
 #load all features names
 features<-getLabelsFeatures()
 # obtain columns that include mean or std
